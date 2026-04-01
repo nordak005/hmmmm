@@ -131,9 +131,7 @@ export default function LoanPage() {
   const total = amount + fee;
   const daily = total / 14;
 
-  if (!isMounted) return null;
-
-  if (loading || authLoading) {
+  if (!isMounted || loading || authLoading) {
       return <div className="container py-20 text-center animate-pulse text-muted-foreground">Initializing Loan Engine...</div>;
   }
 

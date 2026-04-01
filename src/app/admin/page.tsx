@@ -91,9 +91,7 @@ export default function AdminPage() {
     return () => ctx.revert();
   }, [loading]);
 
-  if (!isMounted) return null;
-
-  if (loading) {
+  if (!isMounted || loading) {
      return <div className="container py-20 text-center animate-pulse text-muted-foreground">Loading admin metrics...</div>;
   }
 
