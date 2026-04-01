@@ -184,8 +184,14 @@ export default function DashboardPage() {
   };
 
   const scoreLabel = getScoreLabel(currentScore);
-  const scoreColor = currentScore >= 800 ? "text-primary" : currentScore >= 650 ? "text-yellow-400" : "text-orange-400";
+  const scoreColor = currentScore >= 800 ? "text-green-400" : currentScore >= 650 ? "text-yellow-400" : "text-red-400";
   const eligibleLoan = currentScore >= 800 ? 5000 : currentScore >= 700 ? 2000 : currentScore >= 500 ? 500 : 0;
+  
+  const statusMessage = currentScore >= 800 
+    ? "Excellent – Lowest risk profile. Best!" 
+    : currentScore >= 650 
+      ? "Moderate – Keep taking gigs to grow." 
+      : "Unsafe – High default risk.";
 
   if (!isMounted || loading || authLoading) {
     return <div className="container mx-auto px-4 py-20 text-center animate-pulse text-muted-foreground">Loading Intelligence Dashboard...</div>;
@@ -250,11 +256,11 @@ export default function DashboardPage() {
                 <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="6" className="text-muted/20" strokeDasharray="283" />
                 <circle
                   cx="50" cy="50" r="45" fill="none" strokeWidth="6"
-                  className="score-ring drop-shadow-[0_0_12px_rgba(0,229,153,0.6)]"
+                  className={`score-ring ${currentScore >= 800 ? "text-green-400 drop-shadow-[0_0_12px_rgba(74,222,128,0.6)]" : currentScore >= 650 ? "text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.6)]" : "text-red-400 drop-shadow-[0_0_12px_rgba(248,113,113,0.6)]"}`}
                   strokeLinecap="round"
                   strokeDasharray="283"
                   strokeDashoffset="283"
-                  style={{ stroke: "hsl(var(--primary))" }}
+                  style={{ stroke: "currentColor" }}
                 />
               </svg>
               <div className="absolute flex flex-col items-center justify-center">
@@ -266,6 +272,14 @@ export default function DashboardPage() {
             <div className="mt-6 w-full p-4 bg-primary/5 rounded-xl border border-primary/15 text-center">
               <span className="text-xs text-muted-foreground block mb-1">Eligible Micro-Loan</span>
               <span className="text-2xl font-bold">₹{eligibleLoan.toLocaleString()}</span>
+            </div>
+
+            <div className={`mt-4 text-center px-4 py-2 w-full rounded-lg border text-sm font-medium ${
+              currentScore >= 800 ? "bg-green-500/10 text-green-400 border-green-500/20" : 
+              currentScore >= 650 ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/20" : 
+              "bg-red-500/10 text-red-400 border-red-500/20"
+            }`}>
+              {statusMessage}
             </div>
           </CardContent>
         </Card>
