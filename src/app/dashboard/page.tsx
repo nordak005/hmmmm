@@ -115,30 +115,34 @@ export default function DashboardPage() {
 
     const ctx = gsap.context(() => {
       // Header animation
-      gsap.fromTo(".dash-header", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+      gsap.fromTo(".dash-header", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" });
       
-      // Score counter animation
+      // Cards intense staggered scale
+      gsap.fromTo(".dash-card", { opacity: 0, y: 40, scale: 0.95 }, {
+        opacity: 1, y: 0, scale: 1, duration: 1.0, stagger: 0.12, ease: "back.out(1.1)", delay: 0.1
+      });
+
+      // Score counter complex interpolation
       const counter = { value: 0 };
       gsap.to(counter, {
         value: targetScore,
-        duration: 2,
-        ease: "power2.out",
-        delay: 0.3,
+        duration: 2.5,
+        ease: "power4.out",
+        delay: 0.2,
         onUpdate: () => setCurrentScore(Math.round(counter.value)),
       });
 
-      // Score ring animation
+      // Score ring elastic tracing
       gsap.fromTo(".score-ring", { strokeDashoffset: 283 }, {
         strokeDashoffset: 283 - (283 * (targetScore / 1000)),
-        duration: 2, ease: "power2.out", delay: 0.3
+        duration: 2.5, ease: "expo.out", delay: 0.2
       });
 
-      // Cards stagger
-      gsap.fromTo(".dash-card", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power2.out", delay: 0.2
-      });
+      // Ambient insight badge float
+      gsap.to(".insight-badge", { y: -3, duration: 2, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
-      // Metrics
+      // Metrics timeline fade
+
       gsap.fromTo(".metric-card", { opacity: 0, scale: 0.9 }, {
         opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, ease: "back.out(1.7)", delay: 0.6
       });

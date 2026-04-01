@@ -70,23 +70,32 @@ export default function AdminPage() {
     if (loading) return;
     
     const ctx = gsap.context(() => {
-      gsap.fromTo(".admin-header", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
+      // Header slides down with premium curve
+      gsap.fromTo(".admin-header", { opacity: 0, y: -30, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "expo.out" });
 
-      gsap.fromTo(".stat-card", { opacity: 0, y: 25, scale: 0.95 }, {
-        opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.08, delay: 0.15, ease: "back.out(1.4)"
+      // Stat cards pop and flip
+      gsap.fromTo(".stat-card", { opacity: 0, y: 40, rotationY: 10, scale: 0.8 }, {
+        opacity: 1, y: 0, rotationY: 0, scale: 1, duration: 1.0, stagger: 0.12, delay: 0.1, ease: "back.out(1.5)"
       });
 
-      gsap.fromTo(".chart-card", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.5, delay: 0.4, ease: "power2.out"
+      // Chart card fade up
+      gsap.fromTo(".chart-card", { opacity: 0, y: 50, scale: 0.98 }, {
+        opacity: 1, y: 0, scale: 1, duration: 1.0, delay: 0.3, ease: "expo.out"
       });
 
-      gsap.fromTo(".table-card", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.5, delay: 0.55, ease: "power2.out"
+      // Table card wrapper
+      gsap.fromTo(".table-card", { opacity: 0, x: 40 }, {
+        opacity: 1, x: 0, duration: 0.8, delay: 0.4, ease: "expo.out"
       });
 
-      gsap.fromTo(".table-row-anim", { opacity: 0, x: -15 }, {
-        opacity: 1, x: 0, duration: 0.35, stagger: 0.06, delay: 0.7, ease: "power2.out"
+      // Rows cinematic stagger slide
+      gsap.fromTo(".table-row-anim", { opacity: 0, x: -30, backgroundColor: "rgba(0, 229, 153, 0.1)" }, {
+        opacity: 1, x: 0, backgroundColor: "transparent", duration: 0.6, stagger: 0.08, delay: 0.6, ease: "power3.out"
       });
+
+      // Continuous pulse on alert badge
+      gsap.to(".new-alerts-badge", { scale: 1.05, boxShadow: "0px 0px 10px rgba(239, 68, 68, 0.5)", duration: 1.5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
     }, pageRef);
 
     return () => ctx.revert();
@@ -181,7 +190,7 @@ export default function AdminPage() {
                 <CardTitle className="text-base">Top Borrowers & Alerts</CardTitle>
                 <CardDescription>Real-time risk classification</CardDescription>
               </div>
-              <Badge className="bg-red-500/10 text-red-400 border-none text-xs">2 New Alerts</Badge>
+              <Badge className="new-alerts-badge bg-red-500/10 text-red-400 border-none text-xs">2 New Alerts</Badge>
             </div>
             <input 
               type="text" 

@@ -66,8 +66,8 @@ export default function LoanPage() {
     if (loading) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(".header-anim", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6 });
-      gsap.fromTo(".card-anim", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15, delay: 0.2 });
+      gsap.fromTo(".header-anim", { opacity: 0, y: -40, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "expo.out" });
+      gsap.fromTo(".card-anim", { opacity: 0, y: 50, rotationY: 15, scale: 0.9 }, { opacity: 1, y: 0, rotationY: 0, scale: 1, duration: 1.1, stagger: 0.2, delay: 0.1, ease: "back.out(1.4)" });
     }, pageRef);
     return () => ctx.revert();
   }, [loading]);
@@ -114,7 +114,7 @@ export default function LoanPage() {
             }
             // Result animation
             setTimeout(() => {
-                gsap.fromTo(".result-card", { opacity: 0, scale: 0.92, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.7)" });
+                gsap.fromTo(".result-card", { opacity: 0, scale: 0.85, y: 40, rotationX: 20 }, { opacity: 1, scale: 1, y: 0, rotationX: 0, duration: 0.8, ease: "back.out(1.8)" });
             }, 50);
         }, 2200);
 

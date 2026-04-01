@@ -105,6 +105,29 @@
   .glow-card {
     box-shadow: 0 0 20px -8px rgba(0, 229, 153, 0.25),
                 0 0 60px -15px rgba(0, 229, 153, 0.1);
+    transition: box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1), transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .glow-card:hover {
+    box-shadow: 0 0 35px -5px rgba(0, 229, 153, 0.45),
+                0 0 90px -10px rgba(0, 229, 153, 0.25);
+    transform: translateY(-3px) scale(1.01);
+  }
+  .dash-card {
+    transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.4s ease;
+  }
+  .dash-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
+    transform: translateY(-4px);
+  }
+  .add-platform-btn {
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .add-platform-btn:hover {
+    background-color: rgba(0, 229, 153, 0.05);
+    border-color: rgba(0, 229, 153, 0.4);
+    color: hsl(var(--primary));
+    transform: scale(1.05);
   }
   .animate-in {
     animation: animateIn 0.3s ease-out forwards;

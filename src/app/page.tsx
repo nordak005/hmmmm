@@ -34,40 +34,40 @@ export default function LandingPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero entrance
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.fromTo(".hero-badge", { opacity: 0, y: -20, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6 })
-        .fromTo(".hero-title", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.3")
-        .fromTo(".hero-subtitle", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-        .fromTo(".hero-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.15 }, "-=0.3")
-        .fromTo(".hero-scroll-hint", { opacity: 0 }, { opacity: 1, duration: 0.8 }, "-=0.2");
+      // Hero entrance with premium expo easing
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      tl.fromTo(".hero-badge", { opacity: 0, y: -30, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 1.2 })
+        .fromTo(".hero-title", { opacity: 0, y: 50, rotationX: -15, transformOrigin: "bottom center" }, { opacity: 1, y: 0, rotationX: 0, duration: 1.4 }, "-=0.8")
+        .fromTo(".hero-subtitle", { opacity: 0, y: 30, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, "-=1.0")
+        .fromTo(".hero-cta", { opacity: 0, y: 20, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 1.0, stagger: 0.15, ease: "back.out(1.5)" }, "-=0.8")
+        .fromTo(".hero-scroll-hint", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0 }, "-=0.4");
 
-      // Floating glow
-      gsap.to(".hero-glow-1", { y: -20, x: 10, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
-      gsap.to(".hero-glow-2", { y: 15, x: -15, duration: 5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      // Floating ambient background glows (added rotation and scale)
+      gsap.to(".hero-glow-1", { y: -40, x: 20, scale: 1.1, rotation: 5, duration: 6, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      gsap.to(".hero-glow-2", { y: 30, x: -25, scale: 1.15, rotation: -8, duration: 7, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
-      // Stats counter animation
-      gsap.fromTo(".stat-item", { opacity: 0, y: 40 }, {
-        scrollTrigger: { trigger: statsRef.current, start: "top 80%" },
-        opacity: 1, y: 0, duration: 0.6, stagger: 0.1
+      // Stats counter entrance with back easing
+      gsap.fromTo(".stat-item", { opacity: 0, y: 50, scale: 0.8 }, {
+        scrollTrigger: { trigger: statsRef.current, start: "top 85%" },
+        opacity: 1, y: 0, scale: 1, duration: 1.0, stagger: 0.15, ease: "back.out(1.2)"
       });
 
-      // Platform logos slide
-      gsap.fromTo(".platform-pill", { opacity: 0, x: -30 }, {
-        scrollTrigger: { trigger: platformsRef.current, start: "top 85%" },
-        opacity: 1, x: 0, duration: 0.4, stagger: 0.08
+      // Platform logos slide & pop
+      gsap.fromTo(".platform-pill", { opacity: 0, x: -40, scale: 0.8 }, {
+        scrollTrigger: { trigger: platformsRef.current, start: "top 90%" },
+        opacity: 1, x: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: "back.out(1.7)"
       });
 
-      // Features
-      gsap.fromTo(".feature-card", { opacity: 0, y: 50, scale: 0.95 }, {
-        scrollTrigger: { trigger: featuresRef.current, start: "top 75%" },
-        opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15
+      // Feature cards 3D flip effect
+      gsap.fromTo(".feature-card", { opacity: 0, y: 60, rotationX: 10, scale: 0.9 }, {
+        scrollTrigger: { trigger: featuresRef.current, start: "top 80%" },
+        opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 1.0, stagger: 0.2, ease: "expo.out"
       });
 
-      // Bottom CTA
-      gsap.fromTo(".bottom-cta", { opacity: 0, y: 30 }, {
+      // Bottom CTA dramatic reveal
+      gsap.fromTo(".bottom-cta", { opacity: 0, y: 40, scale: 0.95 }, {
         scrollTrigger: { trigger: ctaRef.current, start: "top 85%" },
-        opacity: 1, y: 0, duration: 0.7
+        opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out"
       });
     }, heroRef);
 
