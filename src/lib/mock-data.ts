@@ -27,6 +27,7 @@ export const MOCK_PLATFORMS = [
   { id: "p1", platform_name: "Uber", platform_icon: "🚗", earnings: 12450, status: "synced" },
   { id: "p2", platform_name: "Upwork", platform_icon: "💻", earnings: 45000, status: "synced" },
   { id: "p3", platform_name: "Swiggy", platform_icon: "🍔", earnings: 8320, status: "synced" },
+  { id: "p4", platform_name: "Zomato", platform_icon: "🍕", earnings: 5120, status: "synced" },
 ];
 
 export const MOCK_EARNINGS = [
@@ -44,13 +45,41 @@ export const MOCK_LOANS = [
   { id: "l3", amount: 5000, fee: 250, total_repayment: 5250, daily_deduction: 375, trust_score: 855, status: "approved", created_at: "2026-03-28" },
 ];
 
-export const MOCK_BORROWERS = [
-  { id: "b1", name: "Rahul Sharma", score: 920, loan: 5000, platforms: 4, status: "Healthy", trend: "up", email: "rahul@example.com" },
-  { id: "b2", name: "Anjali Singh", score: 885, loan: 5000, platforms: 3, status: "Healthy", trend: "up", email: "anjali@example.com" },
-  { id: "b3", name: "Vikram Kumar", score: 840, loan: 2000, platforms: 2, status: "Healthy", trend: "up", email: "vikram@example.com" },
-  { id: "b4", name: "Priya Patel", score: 710, loan: 2000, platforms: 1, status: "At Risk", trend: "down", email: "priya@example.com" },
-  { id: "b5", name: "Rohan Das", score: 620, loan: 0, platforms: 2, status: "Suspended", trend: "down", email: "rohan@example.com" },
-];
+const firstNames = ["Rahul", "Anjali", "Vikram", "Priya", "Rohan", "Sanjay", "Neha", "Amit", "Kavita", "Aditya", "Sneha", "Karan", "Pooja", "Raj", "Megha", "Arjun", "Tanya", "Akash", "Riya", "Mohit", "Sameer", "Deepak"];
+const lastNames = ["Sharma", "Singh", "Kumar", "Patel", "Das", "Gupta", "Verma", "Reddy", "Joshi", "Bose", "Rao", "Nair", "Iyer", "Yadav", "Chauhan", "Mishra", "Chowdhury"];
+const platformOptions = ["Uber", "Upwork", "Swiggy", "Zomato", "Fiverr", "Ola", "Blinkit", "Zepto", "UrbanCompany"];
+
+export const MOCK_BORROWERS = Array.from({ length: 500 }).map((_, i) => {
+  const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+  // Bell curve distribution favoring 600-800
+  const randomFactor = (Math.random() + Math.random() + Math.random()) / 3;
+  const score = Math.floor(randomFactor * 500) + 400; 
+  
+  const loan = score >= 850 ? 5000 : score >= 700 ? 2000 : score >= 500 ? 500 : 0;
+  
+  const numPlatforms = Math.floor(Math.random() * 3) + 1;
+  const userPlatforms = [];
+  for(let p=0; p<numPlatforms; p++) {
+    userPlatforms.push(platformOptions[Math.floor(Math.random() * platformOptions.length)]);
+  }
+  const uniquePlatforms = Array.from(new Set(userPlatforms));
+  
+  const isHealthy = score > 750;
+  const isSuspended = score < 600;
+  
+  return {
+    id: `b${i+1}`,
+    name: `${firstName} ${lastName}`,
+    score: score,
+    loan: loan,
+    platforms: numPlatforms,
+    platformNames: uniquePlatforms.join(", "),
+    status: isHealthy ? "Healthy" : isSuspended ? "Suspended" : "At Risk",
+    trend: score > 700 ? "up" : "down",
+    email: `${firstName.toLocaleLowerCase()}.${lastName.toLocaleLowerCase()}${i}@example.com`
+  };
+});
 
 export const MOCK_PORTFOLIO_DATA = [
   { month: "Jan", defaults: 20, active: 100 },

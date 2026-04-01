@@ -18,6 +18,7 @@ export default function AdminPage() {
   const [borrowers, setBorrowers] = useState<any[]>(MOCK_BORROWERS);
   const [loading, setLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -175,13 +176,20 @@ export default function AdminPage() {
         {/* Borrower Table */}
         <Card className="table-card border-border/30 bg-card/60 flex flex-col">
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-4">
               <div>
                 <CardTitle className="text-base">Top Borrowers & Alerts</CardTitle>
                 <CardDescription>Real-time risk classification</CardDescription>
               </div>
               <Badge className="bg-red-500/10 text-red-400 border-none text-xs">2 New Alerts</Badge>
             </div>
+            <input 
+              type="text" 
+              placeholder="Search by name, platform, score..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full flex h-10 rounded-xl border border-border bg-background/50 px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+            />
           </CardHeader>
           <CardContent className="flex-1 overflow-x-auto">
             <Table>
@@ -194,7 +202,14 @@ export default function AdminPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {borrowers.map((b) => (
+                {borrowers.filter(b => {
+                  if (!searchQuery) return true;
+                  const q = searchQuery.toLowerCase();
+                  return b.name.toLowerCase().includes(q) || 
+                         b.platformNames?.toLowerCase().includes(q) || 
+                         b.score.toString().includes(q) ||
+                         b.status.toLowerCase().includes(q);
+                }).slice(0, 50).map((b) => (
                   <TableRow key={b.id} className="table-row-anim border-border/15 hover:bg-card/60">
                     <TableCell>
                       <div className="flex items-center gap-3">
@@ -203,7 +218,7 @@ export default function AdminPage() {
                         </div>
                         <div>
                           <div className="font-medium text-sm">{b.name}</div>
-                          <div className="text-[11px] text-muted-foreground">{b.platforms} platforms</div>
+                          <div className="text-[11px] text-muted-foreground">{b.platformNames || `${b.platforms} platforms`}</div>
                         </div>
                       </div>
                     </TableCell>
