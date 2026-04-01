@@ -17,6 +17,11 @@ export default function AdminPage() {
   
   const [borrowers, setBorrowers] = useState<any[]>(MOCK_BORROWERS);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fetch real data for admin dashboard
   useEffect(() => {
@@ -85,6 +90,8 @@ export default function AdminPage() {
 
     return () => ctx.revert();
   }, [loading]);
+
+  if (!isMounted) return null;
 
   if (loading) {
      return <div className="container py-20 text-center animate-pulse text-muted-foreground">Loading admin metrics...</div>;

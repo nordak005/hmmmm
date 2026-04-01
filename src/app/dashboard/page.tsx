@@ -36,6 +36,11 @@ export default function DashboardPage() {
   const [platforms, setPlatforms] = useState(MOCK_PLATFORMS);
   const [earningsStream, setEarningsStream] = useState(MOCK_EARNINGS);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fetch Data Layer
   useEffect(() => {
@@ -181,6 +186,8 @@ export default function DashboardPage() {
   const scoreLabel = getScoreLabel(currentScore);
   const scoreColor = currentScore >= 800 ? "text-primary" : currentScore >= 650 ? "text-yellow-400" : "text-orange-400";
   const eligibleLoan = currentScore >= 800 ? 5000 : currentScore >= 700 ? 2000 : currentScore >= 500 ? 500 : 0;
+
+  if (!isMounted) return null;
 
   if (loading || authLoading) {
     return <div className="container mx-auto px-4 py-20 text-center animate-pulse text-muted-foreground">Loading Intelligence Dashboard...</div>;

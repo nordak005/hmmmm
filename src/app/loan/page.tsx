@@ -27,6 +27,11 @@ export default function LoanPage() {
   const [currentScore, setCurrentScore] = useState(0);
   const [maxEligible, setMaxEligible] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fetch score logic
   useEffect(() => {
@@ -125,6 +130,8 @@ export default function LoanPage() {
   const fee = amount * 0.05;
   const total = amount + fee;
   const daily = total / 14;
+
+  if (!isMounted) return null;
 
   if (loading || authLoading) {
       return <div className="container py-20 text-center animate-pulse text-muted-foreground">Initializing Loan Engine...</div>;
